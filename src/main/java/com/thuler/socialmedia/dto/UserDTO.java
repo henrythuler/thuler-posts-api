@@ -10,9 +10,9 @@ public record UserDTO(
 
     public UserDTO(User user){
         this(
-                user.getId(),
-                user.getName(),
-                user.getEmail()
+            user.getId(),
+            user.getName(),
+            user.getEmail()
         );
     }
 
