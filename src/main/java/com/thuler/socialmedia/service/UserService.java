@@ -27,6 +27,12 @@ public class UserService {
         return userRepository.findAll().stream().map(UserDTO::new).toList();
     }
 
+    public UserDTO update(User user, String id){
+        if(!userRepository.existsById(id)) throw new NotFoundException("User");
+        user.setId(id);
+        return new UserDTO(userRepository.save(user));
+    }
+
     public void delete(String id){
         if(!userRepository.existsById(id)) throw new NotFoundException("User");
         userRepository.deleteById(id);

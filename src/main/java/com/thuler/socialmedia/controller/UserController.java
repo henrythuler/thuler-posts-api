@@ -35,6 +35,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> update(@RequestBody User user, @PathVariable String id){
+        return ResponseEntity.ok(userService.update(user, id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id){
         userService.delete(id);
