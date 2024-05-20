@@ -1,6 +1,6 @@
 package com.thuler.socialmedia.model;
 
-import com.thuler.socialmedia.dto.UserDTO;
+import com.thuler.socialmedia.dto.AuthorDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,12 +16,12 @@ public class Post {
     private String title;
     private LocalDateTime date;
     private String body;
-    private UserDTO author;
+    private AuthorDTO author;
 
     public Post() {
     }
 
-    public Post(String id, String title, LocalDateTime date, String body, UserDTO author) {
+    public Post(String id, String title, LocalDateTime date, String body, AuthorDTO author) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -61,11 +61,11 @@ public class Post {
         this.body = body;
     }
 
-    public UserDTO getAuthor() {
+    public AuthorDTO getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserDTO author) {
+    public void setAuthor(AuthorDTO author) {
         this.author = author;
     }
 
@@ -76,6 +76,7 @@ public class Post {
                 ", title='" + title + '\'' +
                 ", date=" + date +
                 ", body='" + body + '\'' +
+                ", author=" + author +
                 '}';
     }
 
