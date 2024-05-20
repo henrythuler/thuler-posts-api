@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
@@ -29,9 +30,25 @@ public class PostController {
         return ResponseEntity.ok(postService.createComment(comment, id));
     }
 
+    @GetMapping
+    public ResponseEntity<List<Post>> findAll(){
+        return ResponseEntity.ok(postService.findAll());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Post> findById(@PathVariable String id){
         return ResponseEntity.ok(postService.findById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Post> update(@RequestBody Post post, @PathVariable String id){
+        return ResponseEntity.ok(postService.update(post, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Post> delete(@PathVariable String id){
+        postService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
