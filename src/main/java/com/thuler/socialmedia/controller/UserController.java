@@ -19,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody UserDTO user){
+    public ResponseEntity<UserDTO> create(@RequestBody User user){
         UserDTO newUser = userService.create(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.id()).toUri();
         return ResponseEntity.created(location).body(newUser);
@@ -33,6 +33,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
         return ResponseEntity.ok(userService.findById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
