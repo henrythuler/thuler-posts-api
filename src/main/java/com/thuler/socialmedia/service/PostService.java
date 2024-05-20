@@ -7,12 +7,12 @@ import com.thuler.socialmedia.model.User;
 import com.thuler.socialmedia.repository.CommentRepository;
 import com.thuler.socialmedia.repository.PostRepository;
 import com.thuler.socialmedia.repository.UserRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +62,10 @@ public class PostService {
 
     public List<Post> findByTitleContaining(String title){
         return postRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Post> fullSearch(String title, LocalDate minDate, LocalDate maxDate){
+        return postRepository.fullSearch(title, minDate, maxDate);
     }
 
     public Post update(Post post, String id){
