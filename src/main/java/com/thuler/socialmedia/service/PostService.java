@@ -2,10 +2,15 @@ package com.thuler.socialmedia.service;
 
 import com.thuler.socialmedia.exception.NotFoundException;
 import com.thuler.socialmedia.model.Post;
+import com.thuler.socialmedia.model.User;
 import com.thuler.socialmedia.repository.PostRepository;
+import com.thuler.socialmedia.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -13,8 +18,25 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public ResponseEntity<Post> findById(String id){
-        return ResponseEntity.ok(postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post")));
+    @Autowired
+    private UserRepository userRepository;
+
+    public Post create(Post post){
+        Optional<User> foundUser = userRepository.findById(post.getAuthor().id());
+
+        if(foundUser.isEmpty()) throw new NotFoundException("User");
+        Post newPost = postRepository.save(post);
+
+        foundUser.get().getPosts().add(newPost);
+        userRepository.save(foundUser.get());
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPost.getId()).toUri();
+
+        return newPost;
+    }
+
+    public Post findById(String id){
+        return postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post"));
     }
 
 }

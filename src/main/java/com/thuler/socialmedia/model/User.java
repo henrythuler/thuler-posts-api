@@ -1,8 +1,11 @@
 package com.thuler.socialmedia.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Document(collection = "user")
@@ -13,6 +16,9 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    @DBRef(lazy = true)
+    private List<Post> posts = new ArrayList<>();
 
     public User(String id, String name, String email, String password) {
         this.id = id;
@@ -55,6 +61,10 @@ public class User {
         this.password = password;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -62,6 +72,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", posts=" + posts +
                 '}';
     }
 
@@ -77,4 +88,5 @@ public class User {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }
