@@ -1,6 +1,6 @@
 package com.thuler.socialmedia.controller;
 
-import com.thuler.socialmedia.model.User;
+import com.thuler.socialmedia.dto.UserDTO;
 import com.thuler.socialmedia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
+    public ResponseEntity<List<UserDTO>> findAll(){
         return ResponseEntity.ok(userService.findAll());
     }
 
