@@ -60,6 +60,10 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post"));
     }
 
+    public List<Post> findByTitleContaining(String title){
+        return postRepository.findByTitleContainingIgnoreCase(title);
+    }
+
     public Post update(Post post, String id){
         if(!postRepository.existsById(id)) throw new NotFoundException("Post");
         post.setId(id);

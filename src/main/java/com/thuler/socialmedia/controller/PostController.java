@@ -3,6 +3,7 @@ package com.thuler.socialmedia.controller;
 import com.thuler.socialmedia.model.Comment;
 import com.thuler.socialmedia.model.Post;
 import com.thuler.socialmedia.service.PostService;
+import com.thuler.socialmedia.util.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,12 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<Post> findById(@PathVariable String id){
         return ResponseEntity.ok(postService.findById(id));
+    }
+
+    @GetMapping("/titlesearch")
+    public ResponseEntity<List<Post>> findByTitleContaining(@RequestParam(value = "title", defaultValue = "") String title){
+        title = URL.decodeParam(title);
+        return ResponseEntity.ok(postService.findByTitleContaining(title));
     }
 
     @PutMapping("/{id}")
