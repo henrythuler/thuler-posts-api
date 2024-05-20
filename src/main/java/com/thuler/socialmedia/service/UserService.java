@@ -2,12 +2,14 @@ package com.thuler.socialmedia.service;
 
 import com.thuler.socialmedia.dto.UserDTO;
 import com.thuler.socialmedia.exception.NotFoundException;
+import com.thuler.socialmedia.model.Post;
 import com.thuler.socialmedia.model.User;
 import com.thuler.socialmedia.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,6 +27,12 @@ public class UserService {
 
     public List<UserDTO> findAll(){
         return userRepository.findAll().stream().map(UserDTO::new).toList();
+    }
+
+    public List<Post> findPosts(String id){
+        Optional<User> foundUser = userRepository.findById(id);
+        if(foundUser.isEmpty()) throw new NotFoundException("User");
+        return foundUser.get().getPosts();
     }
 
     public UserDTO update(User user, String id){

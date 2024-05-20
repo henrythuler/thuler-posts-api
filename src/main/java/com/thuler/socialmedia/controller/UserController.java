@@ -1,6 +1,7 @@
 package com.thuler.socialmedia.controller;
 
 import com.thuler.socialmedia.dto.UserDTO;
+import com.thuler.socialmedia.model.Post;
 import com.thuler.socialmedia.model.User;
 import com.thuler.socialmedia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
         return ResponseEntity.ok(userService.findById(id));
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        return ResponseEntity.ok(userService.findPosts(id));
     }
 
     @PutMapping("/{id}")
